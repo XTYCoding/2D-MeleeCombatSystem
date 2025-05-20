@@ -3,20 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
-    public Rigidbody2D rigidBody;
-    public PlayerInput playerInput;
-    public PhysicsCheck physicsCheck;
-    public Animator animator;
 
     public PlayerStateMachine stateMachine { get; private set;}
 
     public Vector2 inputXY;
-    public int moveSpeed;
     public int jumpForce;
-    public bool facingRight = true;
-    public int facingDir = 1; //1表示向右，-1表示向左
+
 
     public float gameSpeed;
 
@@ -37,12 +31,10 @@ public class Player : MonoBehaviour
     public PlayerHeavyAttackState heavyAttackState { get; private set; }
 
 
-    private void Awake()
+    protected override void Awake()
     {
-       // Debug.Log("Awake");
-        rigidBody = GetComponent<Rigidbody2D>();
-        physicsCheck = GetComponent<PhysicsCheck>();
-        animator = GetComponentInChildren<Animator>();
+        // Debug.Log("Awake");
+        base.Awake();
         playerInput = new PlayerInput();
         Time.timeScale = gameSpeed;
 
@@ -60,36 +52,6 @@ public class Player : MonoBehaviour
         heavyAttackState = new PlayerHeavyAttackState(this, stateMachine, "HeavyAttack", "HeavyAttackTrigger");
     }
 
-    #region 设置速度
-    public void SetVelocity(Vector2 inputXY)
-    {
-        FlipController(inputXY.x); //每一次改变速度都检查是否要翻转
-        rigidBody.velocity = new Vector2(moveSpeed * inputXY.x * Time.deltaTime, rigidBody.velocity.y);
-    }
-
-    public void SetZeroVelocity()
-    {
-
-        rigidBody.velocity = new Vector2(0, 0);
-    }
-    #endregion
-
-    #region 翻转相关
-    public void FlipController(float x)
-    {
-        if (x > 0.05 && !facingRight) { Flip(); }
-        else if (x < -0.05 && facingRight) { Flip(); }
-    ;
-    }
-
-    public void Flip()
-    {
-        Debug.Log("Flip");
-        facingDir *= -1;
-        facingRight = !facingRight;
-        transform.Rotate(0, 180, 0);
-    }
-    #endregion
 
 
 

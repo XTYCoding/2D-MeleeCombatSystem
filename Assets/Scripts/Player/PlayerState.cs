@@ -31,7 +31,7 @@ public class PlayerState
 
     public virtual void Enter()
     {
-        Debug.Log("Enter"+animBoolName);
+        //Debug.Log("Enter"+animBoolName);
         rigidBody = player.rigidBody;
         animator = player.animator;
         playerInput = player.playerInput;
@@ -59,7 +59,7 @@ public class PlayerState
         {
             animator.SetBool(animBoolName, false);
         }
-        Debug.Log("Exit" + animBoolName);
+       // Debug.Log("Exit" + animBoolName);
     }
     public virtual void LogicUpdate()
     {
