@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRunState : PlayerGroundState
+public class PlayerHeavyAttackState : PlayerState
 {
-    public PlayerRunState(Player player, PlayerStateMachine stateMachine, string animBoolName, string animTriggerName) : base(player, stateMachine, animBoolName, animTriggerName)
+    public PlayerHeavyAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName, string animTriggerName) : base(player, stateMachine, animBoolName, animTriggerName)
     {
     }
 
@@ -21,11 +21,11 @@ public class PlayerRunState : PlayerGroundState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (Mathf.Abs(inputXY.x) < 0.1) stateMachine.ChangeState(player.runBreakState);
+        if (animFinTrigger) stateMachine.ChangeState(player.idleState);
     }
 
     public override void PhysicsUpdate()
     {
-        base.PhysicsUpdate();
+        player.SetZeroVelocity();
     }
 }

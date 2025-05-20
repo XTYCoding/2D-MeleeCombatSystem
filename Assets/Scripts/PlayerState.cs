@@ -11,6 +11,7 @@ public class PlayerState
     protected Rigidbody2D rigidBody;
     protected PlayerInput playerInput;
     protected Animator animator;
+    protected PhysicsCheck physicsCheck;
 
     private string animBoolName;
     private string animTriggerName;
@@ -34,6 +35,7 @@ public class PlayerState
         rigidBody = player.rigidBody;
         animator = player.animator;
         playerInput = player.playerInput;
+        physicsCheck = player.physicsCheck;
         animFinTrigger = false;
 
 

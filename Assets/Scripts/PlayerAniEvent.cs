@@ -20,5 +20,14 @@ public class NewBehaviourScript : MonoBehaviour
         player.Flip();
     }
 
+    public void AnimationAttack()
+    {
+        player.isAttacking = true;
+    }
+    public void AnimationAttackOver()
+    {
+        player.isAttacking = false;
+
+    }
 
 }
