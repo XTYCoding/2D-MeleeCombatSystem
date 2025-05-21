@@ -5,6 +5,7 @@ using UnityEngine;
 public class SkeletonState : EnemyState
 {
     protected Skeleton skeleton;
+    protected float stateTimeer;
 
     public SkeletonState(EnemyStateMachine stateMachine, Enemy enemy, string animBoolName, string animTriggerName, Skeleton skeleton) : base(stateMachine, enemy, animBoolName, animTriggerName)
     {

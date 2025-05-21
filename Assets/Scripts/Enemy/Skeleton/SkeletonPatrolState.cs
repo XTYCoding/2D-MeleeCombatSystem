@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SkeletonPatrolState : SkeletonState
@@ -21,14 +22,14 @@ public class SkeletonPatrolState : SkeletonState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        
-        if (!physicsCheck.isGrounded){
-            enemy.Flip();
+        if(physicsCheck.playerDetected) stateMachine.ChangeState(skeleton.chaseState);
+        if (!physicsCheck.isGrounded || physicsCheck.wallDetected){
             stateMachine.ChangeState(skeleton.idleState); }
     }
 
     public override void PhysicsUpdate()
     {
-        enemy.SetVelocity(enemy.facingDir * enemy.moveSpeed*Time.deltaTime, 0);
+        enemy.SetVelocity(enemy.facingDir * enemy.moveSpeed * Time.deltaTime, 0);
+    
     }
 }

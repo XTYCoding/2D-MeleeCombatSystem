@@ -11,6 +11,7 @@ public class SkeletonIdleState : SkeletonState
     public override void Enter()
     {
         base.Enter();
+        stateTimeer = 2f;
     }
 
     public override void Exit()
@@ -21,6 +22,15 @@ public class SkeletonIdleState : SkeletonState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if(stateTimeer <= 0)
+        {   
+            enemy.Flip();
+            stateMachine.ChangeState(skeleton.patrolState);
+        }
+        else
+        {
+            stateTimeer -= Time.deltaTime;
+        }
     }
 
     public override void PhysicsUpdate()

@@ -6,6 +6,8 @@ public class Skeleton : Enemy
 {
     public SkeletonIdleState idleState;
     public SkeletonPatrolState patrolState;
+    public SkeletonChaseState chaseState;
+    public SkeletonAttackState attackState;
 
     protected override void Awake()
     {
@@ -13,6 +15,8 @@ public class Skeleton : Enemy
 
         idleState = new SkeletonIdleState(stateMachine, this, "Idle", "IdleTrigger", this);
         patrolState = new SkeletonPatrolState(stateMachine, this, "Patrol", "PatrolTrigger", this);
+        chaseState = new SkeletonChaseState(stateMachine, this, "Chase", "ChaseTrigger", this);
+        attackState = new SkeletonAttackState(stateMachine, this, "Attack", "AttackTrigger", this);
     }
 
     protected override void FixedUpdate()
