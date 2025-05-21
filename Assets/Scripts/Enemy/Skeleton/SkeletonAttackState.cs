@@ -11,7 +11,7 @@ public class SkeletonAttackState : SkeletonState
     public override void Enter()
     {
         base.Enter();
-        enemy.SetVelocity(0f, 0f);
+        animFinTrigger = false;
         enemy.SetZeroVelocity();
     }
 
@@ -23,16 +23,16 @@ public class SkeletonAttackState : SkeletonState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        
-        if (physicsCheck.playerContacted)
-        {
-            stateMachine.ChangeState(this);
-        }
-        else stateMachine.ChangeState(skeleton.chaseState);
+        if(animFinTrigger) stateMachine.ChangeState(skeleton.patrolState);
+        // if (physicsCheck.playerContacted)
+        // {
+        //     stateMachine.ChangeState(this);
+        // }
+        // else stateMachine.ChangeState(skeleton.chaseState);
     }
 
     public override void PhysicsUpdate()
     {
-        
+ 
     }
 }

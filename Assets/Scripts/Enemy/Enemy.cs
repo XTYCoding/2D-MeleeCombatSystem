@@ -5,13 +5,14 @@ using UnityEngine;
 public class Enemy : Entity
 {
     public EnemyStateMachine stateMachine;
-
+    public Transform player{ get; private set; }
 
 
     protected override void Awake()
     {
         base.Awake();
         stateMachine = new EnemyStateMachine();
+        player = GameObject.FindWithTag("Player").transform;
 
     }
     // Start is called before the first frame update

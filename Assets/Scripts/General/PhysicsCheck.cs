@@ -24,6 +24,10 @@ public class PhysicsCheck : MonoBehaviour
             playerDetect.position,
             entity.facingDir * Vector2.right,
             playerDetectDist,
+            playerLayer)||Physics2D.Raycast(
+            playerDetect.position,
+            entity.facingDir * Vector2.left,
+            playerDetectDist,
             playerLayer);
 
     public bool playerContacted
@@ -68,7 +72,7 @@ private void OnDrawGizmosSelected()
 
     Gizmos.color = Color.blue;
     Gizmos.DrawLine(playerDetect.position, playerDetect.position + entity.facingDir * Vector3.right * playerDetectDist);
-
+    Gizmos.DrawLine(playerDetect.position, playerDetect.position + entity.facingDir * Vector3.left * playerDetectDist);
     Gizmos.color = Color.yellow;
     Gizmos.DrawLine(playerDetect.position, playerDetect.position + entity.facingDir * Vector3.right * playerContactedDist);
 }

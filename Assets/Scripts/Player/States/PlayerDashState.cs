@@ -11,7 +11,7 @@ public class PlayerDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        rigidBody.AddForce(Vector2.right*player.jumpForce, ForceMode2D.Impulse);
+        rigidBody.AddForce(player.facingDir*Vector2.right*player.jumpForce, ForceMode2D.Impulse);
     }
 
     public override void Exit()
@@ -27,6 +27,6 @@ public class PlayerDashState : PlayerState
 
     public override void PhysicsUpdate()
     {
-        
+        player.SetVelocity(rigidBody.velocity.x, 0);
     }
 }

@@ -13,6 +13,7 @@ public class EnemyState
     protected Rigidbody2D rigidBody;
     protected Animator animator;
     protected PhysicsCheck physicsCheck;
+    public bool animFinTrigger;
 
     public EnemyState(EnemyStateMachine stateMachine, Enemy enemy, string animBoolName, string animTriggerName)
     {

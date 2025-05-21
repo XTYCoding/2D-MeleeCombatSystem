@@ -735,15 +735,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b73a4d4e6191584e85ddfc69089d432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entity: {fileID: 1128357290}
   isGrounded: 0
   wallDetected: 0
-  playerDetected: 0
   groundDetect: {fileID: 1097315819}
   wallDetect: {fileID: 1590609211}
   playerDetect: {fileID: 1590609211}
-  groundDetectDist: 0.07
-  wallDetectDist: 3.21
-  playerDetectDist: -2.39
+  groundDetectDist: 0.06
+  wallDetectDist: 0.54
+  playerDetectDist: 3.1
+  playerContactedDist: 0.33
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -1081,7 +1082,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1182,15 +1183,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b73a4d4e6191584e85ddfc69089d432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entity: {fileID: 1892869231}
   isGrounded: 0
   wallDetected: 0
-  playerDetected: 0
   groundDetect: {fileID: 75485864}
   wallDetect: {fileID: 1067425668}
-  playerDetect: {fileID: 0}
+  playerDetect: {fileID: 1067425668}
   groundDetectDist: 0.06
   wallDetectDist: 0.54
   playerDetectDist: 0
+  playerContactedDist: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

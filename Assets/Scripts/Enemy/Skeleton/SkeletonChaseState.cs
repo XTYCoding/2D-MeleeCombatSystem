@@ -34,7 +34,14 @@ public class SkeletonChaseState : SkeletonState
 
     public override void PhysicsUpdate()
     {
-        enemy.SetVelocity(2*enemy.facingDir * enemy.moveSpeed * Time.deltaTime, 0);
+        if(enemy.transform.position.x>= enemy.player.position.x)
+        {
+            enemy.SetVelocity(2*Vector2.left * enemy.moveSpeed * Time.deltaTime);
+        }
+        else if(enemy.transform.position.x<enemy.player.position.x)
+        {
+            enemy.SetVelocity(2*Vector2.right * enemy.moveSpeed * Time.deltaTime);
+        }
     }
 }
 
