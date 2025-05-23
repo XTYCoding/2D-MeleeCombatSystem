@@ -30,4 +30,16 @@ public class NewBehaviourScript : MonoBehaviour
 
     }
 
+    public void AnimationBlock()
+    {
+        player.isBlocking = true;
+        player.animator.SetBool("IsBlocking", true);
+    }
+    public void AnimationBlockkOver()
+    {
+        player.isBlocking = false;
+        player.animator.SetBool("IsBlocking", false);
+
+    }
+
 }

@@ -15,7 +15,7 @@ public class Player : Entity
     public float gameSpeed;
 
     public int comboCounter = 0;
-    public bool isAttacking;
+
     public PlayerIdleState idleState { get; private set; }
     public PlayerWalkState walkState { get; private set; }
     public PlayerRunState runState { get; private set; }
@@ -29,7 +29,7 @@ public class Player : Entity
     public PlayerBackDashState backDashState { get; private set; }
     public PlayerLightAttackState lightAttackState { get; private set; }
     public PlayerHeavyAttackState heavyAttackState { get; private set; }
-
+    public PlayerBlockState blockState { get; private set; }
 
     protected override void Awake()
     {
@@ -50,6 +50,7 @@ public class Player : Entity
         backDashState = new PlayerBackDashState(this, stateMachine, "BackDash", "BackDashTrigger");
         lightAttackState = new PlayerLightAttackState(this, stateMachine, "LightAttack", "LightAttackTrigger");
         heavyAttackState = new PlayerHeavyAttackState(this, stateMachine, "HeavyAttack", "HeavyAttackTrigger");
+        blockState = new PlayerBlockState(this, stateMachine, "Block", "BlockTrigger");
     }
 
 
@@ -69,6 +70,7 @@ public class Player : Entity
     private void Update()
     {
         stateMachine.currentState.LogicUpdate();
+        
     }
 
     private void FixedUpdate()

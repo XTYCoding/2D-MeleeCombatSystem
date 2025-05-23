@@ -41,6 +41,7 @@ public class PlayerLightAttackState : PlayerState
 
         playerInput.GamePlay.LightAttack.started -= LightAttack;
         playerInput.GamePlay.HeavyAttack.started -= HeavyAttack;
+        player.isAttacking = false;
     }
 
     public override void LogicUpdate()

@@ -9,6 +9,8 @@ public class Entity : MonoBehaviour
     public PhysicsCheck physicsCheck;
     public Animator animator;
     
+    public bool isAttacking;
+    public bool isBlocking;
 
     public bool facingRight = true;
     public int facingDir = 1;
@@ -19,8 +21,6 @@ public class Entity : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         physicsCheck = GetComponent<PhysicsCheck>();
         animator = GetComponentInChildren<Animator>();
-
-
     }
 
     public void FlipController(float x)
@@ -40,13 +40,13 @@ public class Entity : MonoBehaviour
 
     public void SetVelocity(Vector2 inputXY)
     {
-        FlipController(inputXY.x); //Ã¿Ò»´Î¸Ä±äËÙ¶È¶¼¼ì²éÊÇ·ñÒª·­×ª
+        FlipController(inputXY.x); //Ã¿Ò»ï¿½Î¸Ä±ï¿½ï¿½Ù¶È¶ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Òªï¿½ï¿½×ª
         rigidBody.velocity = new Vector2(moveSpeed * inputXY.x * Time.deltaTime, rigidBody.velocity.y);
     }
 
     public void SetVelocity(float x,float y)
     {
-        FlipController(x); //Ã¿Ò»´Î¸Ä±äËÙ¶È¶¼¼ì²éÊÇ·ñÒª·­×ª
+        FlipController(x); //Ã¿Ò»ï¿½Î¸Ä±ï¿½ï¿½Ù¶È¶ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Òªï¿½ï¿½×ª
         rigidBody.velocity = new Vector2(x,y);
     }
 
@@ -55,7 +55,22 @@ public class Entity : MonoBehaviour
 
         rigidBody.velocity = new Vector2(0, 0);
     }
-
+    
+    public void TakeDamage(Attack attack)
+    {
+        if (isBlocking)
+        {
+            Debug.Log(this.name+" is Blocking");
+        }
+        else
+        {
+            Debug.Log(attack.power+" "+attack.dir);
+            rigidBody.AddForce(new Vector2(attack.power * attack.dir, 0), ForceMode2D.Impulse);
+            animator.SetTrigger("TakeDamage");
+            Debug.Log(this.name+"Take Damage");          
+        }
+        // Implement damage logic here
+    }
 
 
     // Start is called before the first frame update

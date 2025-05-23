@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static Unity.Collections.AllocatorManager;
 
 public class PlayerGroundState : PlayerState
 {
@@ -18,11 +19,17 @@ public class PlayerGroundState : PlayerState
         playerInput.GamePlay.BackDash.started += BackDash;
         playerInput.GamePlay.LightAttack.started += LightAttack;
         playerInput.GamePlay.HeavyAttack.started += HeavyAttack;
+        playerInput.GamePlay.Block.started += Block;
+    }
+    
+    private void Block(InputAction.CallbackContext context)
+    {
+        if(physicsCheck.isGrounded) stateMachine.ChangeState(player.blockState);
     }
 
     private void HeavyAttack(InputAction.CallbackContext context)
     {
-        if(physicsCheck.isGrounded) stateMachine.ChangeState(player.heavyAttackState);
+        if (physicsCheck.isGrounded) stateMachine.ChangeState(player.heavyAttackState);
     }
 
     private void LightAttack(InputAction.CallbackContext context)
@@ -60,6 +67,7 @@ public class PlayerGroundState : PlayerState
         playerInput.GamePlay.BackDash.started -= BackDash;
         playerInput.GamePlay.LightAttack.started -= LightAttack;
         playerInput.GamePlay.HeavyAttack.started -= HeavyAttack;
+        playerInput.GamePlay.Block.started -= Block;
     }
 
     public override void LogicUpdate()
