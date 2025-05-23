@@ -11,6 +11,7 @@ public class Entity : MonoBehaviour
     
     public bool isAttacking;
     public bool isBlocking;
+    public bool Stunned;
 
     public bool facingRight = true;
     public int facingDir = 1;
@@ -32,7 +33,7 @@ public class Entity : MonoBehaviour
 
     public void Flip()
     {
-        Debug.Log("Flip");
+        //Debug.Log("Flip");
         facingDir *= -1;
         facingRight = !facingRight;
         transform.Rotate(0, 180, 0);
@@ -64,12 +65,18 @@ public class Entity : MonoBehaviour
         }
         else
         {
-            Debug.Log(attack.power+" "+attack.dir);
+          //  Debug.Log(attack.power+" "+attack.dir);
             rigidBody.AddForce(new Vector2(attack.power * attack.dir, 0), ForceMode2D.Impulse);
             animator.SetTrigger("TakeDamage");
             Debug.Log(this.name+"Take Damage");          
         }
         // Implement damage logic here
+    }
+
+    public void SetStunned()
+    {
+        Debug.Log(this.name+" Stunned");
+        Stunned = true;
     }
 
 

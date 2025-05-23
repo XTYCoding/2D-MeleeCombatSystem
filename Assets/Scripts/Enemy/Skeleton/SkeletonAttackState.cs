@@ -23,7 +23,8 @@ public class SkeletonAttackState : SkeletonState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(animFinTrigger) stateMachine.ChangeState(skeleton.patrolState);
+        if(enemy.Stunned) stateMachine.ChangeState(skeleton.stunnedState);
+        if (animFinTrigger) stateMachine.ChangeState(skeleton.patrolState);
         // if (physicsCheck.playerContacted)
         // {
         //     stateMachine.ChangeState(this);

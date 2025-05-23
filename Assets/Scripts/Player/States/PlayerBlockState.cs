@@ -30,7 +30,10 @@ public class PlayerBlockState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (animFinTrigger) stateMachine.ChangeState(player.idleState);
+        if (animFinTrigger)
+        {
+            stateMachine.ChangeState(player.idleState);
+        }
     }
 
     public override void PhysicsUpdate()
