@@ -11,12 +11,15 @@ public class PlayerBackDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        rigidBody.AddForce(-player.facingDir*Vector2.right*player.jumpForce, ForceMode2D.Impulse);
+        player.noFlip = true; // Disable flipping during back dash
+       
     }
 
     public override void Exit()
     {
         base.Exit();
+        player.noFlip = false; // Re-enable flipping after back dash
+         player.SetVelocity(0, rigidBody.velocity.y); 
     }
 
     public override void LogicUpdate()
@@ -27,7 +30,7 @@ public class PlayerBackDashState : PlayerState
 
     public override void PhysicsUpdate()
     {
-            player.SetVelocity(rigidBody.velocity.x, 0);
+        player.SetVelocity(-player.facingDir*player.dashSpeed, 0);
     }
 
 }

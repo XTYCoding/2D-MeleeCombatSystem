@@ -25,6 +25,7 @@ public class SkeletonState : EnemyState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        
     }
 
     public override void PhysicsUpdate()

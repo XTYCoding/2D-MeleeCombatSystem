@@ -10,7 +10,7 @@ public class Player : Entity
 
     public Vector2 inputXY;
     public int jumpForce;
-
+    public int dashSpeed;
 
     public float gameSpeed;
 

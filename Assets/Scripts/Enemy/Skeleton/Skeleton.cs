@@ -9,6 +9,9 @@ public class Skeleton : Enemy
     public SkeletonChaseState chaseState;
     public SkeletonAttackState attackState;
     public SkeletonStunnedState stunnedState;
+    public SkeletonHurtState hurtState;
+
+    public float hurtStateDuration = 1f; // Duration of the hurt state in seconds
 
     protected override void Awake()
     {
@@ -19,6 +22,7 @@ public class Skeleton : Enemy
         chaseState = new SkeletonChaseState(stateMachine, this, "Chase", "ChaseTrigger", this);
         attackState = new SkeletonAttackState(stateMachine, this, "Attack", "AttackTrigger", this);
         stunnedState = new SkeletonStunnedState(stateMachine, this, "Stunned", "StunnedTrigger", this);
+        hurtState = new SkeletonHurtState(stateMachine, this, "Hurt", "HurtTrigger", this);
     }
 
     protected override void FixedUpdate()
@@ -35,6 +39,28 @@ public class Skeleton : Enemy
     protected override void Update()
     {
         base.Update();
+    }
+
+    public override void TakeDamage(Attack attack)
+    {
+        
+        CameraFx.Instance.HitPause(5);
+        CameraFx.Instance.CameraShake(0.1f, attack.power*0.02f);
+        SetZeroVelocity();
+        rigidBody.AddForce(new Vector2(attack.power * attack.dir, 0), ForceMode2D.Impulse);
+        fxAnimator.SetTrigger("TakeDamage");
+        stateMachine.ChangeState(hurtState);
+    }
+
+    void OnDrawGizmos()
+    {
+        var box = GetComponent<BoxCollider2D>();
+        if (box != null)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.matrix = transform.localToWorldMatrix;
+            Gizmos.DrawWireCube(box.offset, box.size);
+        }
     }
     
 }

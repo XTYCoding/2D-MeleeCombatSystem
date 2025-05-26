@@ -8,6 +8,7 @@ public class Entity : MonoBehaviour
     public PlayerInput playerInput;
     public PhysicsCheck physicsCheck;
     public Animator animator;
+    public Animator fxAnimator;
     
     public bool isAttacking;
     public bool isBlocking;
@@ -17,18 +18,25 @@ public class Entity : MonoBehaviour
     public int facingDir = 1;
     public int moveSpeed;
 
+    public bool noFlip = false; // If true, the entity will not flip when changing direction
+
     protected virtual void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         physicsCheck = GetComponent<PhysicsCheck>();
-        animator = GetComponentInChildren<Animator>();
+        Animator[] animators = GetComponentsInChildren<Animator>();
+        animator = animators[0];
+        fxAnimator = animators[1];
     }
 
     public void FlipController(float x)
     {
-        if (x > 0.05 && !facingRight) { Flip(); }
-        else if (x < -0.05 && facingRight) { Flip(); }
-;
+        if (!noFlip)
+        {
+            if (x > 0.05 && !facingRight) { Flip(); }
+            else if (x < -0.05 && facingRight) { Flip(); }
+        }
+
     }
 
     public void Flip()
@@ -57,7 +65,7 @@ public class Entity : MonoBehaviour
         rigidBody.velocity = new Vector2(0, 0);
     }
     
-    public void TakeDamage(Attack attack)
+    public virtual void TakeDamage(Attack attack)
     {
         if (isBlocking)
         {
@@ -67,7 +75,10 @@ public class Entity : MonoBehaviour
         {
           //  Debug.Log(attack.power+" "+attack.dir);
             rigidBody.AddForce(new Vector2(attack.power * attack.dir, 0), ForceMode2D.Impulse);
+            CameraFx.Instance.HitPause(5);
+            CameraFx.Instance.CameraShake(0.1f, attack.power*0.02f);
             animator.SetTrigger("TakeDamage");
+            fxAnimator.SetTrigger("TakeDamage");
             Debug.Log(this.name+"Take Damage");          
         }
         // Implement damage logic here
@@ -75,20 +86,9 @@ public class Entity : MonoBehaviour
 
     public void SetStunned()
     {
-        Debug.Log(this.name+" Stunned");
+        Debug.Log(this.name + " Stunned");
         Stunned = true;
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        CameraFx.Instance.HitPause(5);
+        CameraFx.Instance.CameraShake(0.1f, 0.05f);
     }
 }
