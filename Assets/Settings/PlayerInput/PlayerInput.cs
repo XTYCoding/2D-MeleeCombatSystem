@@ -89,6 +89,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReleaseSkill"",
+                    ""type"": ""Button"",
+                    ""id"": ""9782226d-7769-4489-bdf6-9eb33e7d39dc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeSkill"",
+                    ""type"": ""Value"",
+                    ""id"": ""a67a0b07-705b-45c7-8e85-2ec1a5736523"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -168,6 +186,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e59b2188-47c0-419a-a99e-e7e2cbbc2225"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReleaseSkill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d35d518a-1638-41ea-a19a-51a975017991"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeSkill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -183,6 +223,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_GamePlay_LightAttack = m_GamePlay.FindAction("LightAttack", throwIfNotFound: true);
         m_GamePlay_HeavyAttack = m_GamePlay.FindAction("HeavyAttack", throwIfNotFound: true);
         m_GamePlay_Block = m_GamePlay.FindAction("Block", throwIfNotFound: true);
+        m_GamePlay_ReleaseSkill = m_GamePlay.FindAction("ReleaseSkill", throwIfNotFound: true);
+        m_GamePlay_ChangeSkill = m_GamePlay.FindAction("ChangeSkill", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -251,6 +293,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_LightAttack;
     private readonly InputAction m_GamePlay_HeavyAttack;
     private readonly InputAction m_GamePlay_Block;
+    private readonly InputAction m_GamePlay_ReleaseSkill;
+    private readonly InputAction m_GamePlay_ChangeSkill;
     public struct GamePlayActions
     {
         private @PlayerInput m_Wrapper;
@@ -262,6 +306,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @LightAttack => m_Wrapper.m_GamePlay_LightAttack;
         public InputAction @HeavyAttack => m_Wrapper.m_GamePlay_HeavyAttack;
         public InputAction @Block => m_Wrapper.m_GamePlay_Block;
+        public InputAction @ReleaseSkill => m_Wrapper.m_GamePlay_ReleaseSkill;
+        public InputAction @ChangeSkill => m_Wrapper.m_GamePlay_ChangeSkill;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -292,6 +338,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Block.started += instance.OnBlock;
             @Block.performed += instance.OnBlock;
             @Block.canceled += instance.OnBlock;
+            @ReleaseSkill.started += instance.OnReleaseSkill;
+            @ReleaseSkill.performed += instance.OnReleaseSkill;
+            @ReleaseSkill.canceled += instance.OnReleaseSkill;
+            @ChangeSkill.started += instance.OnChangeSkill;
+            @ChangeSkill.performed += instance.OnChangeSkill;
+            @ChangeSkill.canceled += instance.OnChangeSkill;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -317,6 +369,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Block.started -= instance.OnBlock;
             @Block.performed -= instance.OnBlock;
             @Block.canceled -= instance.OnBlock;
+            @ReleaseSkill.started -= instance.OnReleaseSkill;
+            @ReleaseSkill.performed -= instance.OnReleaseSkill;
+            @ReleaseSkill.canceled -= instance.OnReleaseSkill;
+            @ChangeSkill.started -= instance.OnChangeSkill;
+            @ChangeSkill.performed -= instance.OnChangeSkill;
+            @ChangeSkill.canceled -= instance.OnChangeSkill;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -343,5 +401,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnLightAttack(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
+        void OnReleaseSkill(InputAction.CallbackContext context);
+        void OnChangeSkill(InputAction.CallbackContext context);
     }
 }

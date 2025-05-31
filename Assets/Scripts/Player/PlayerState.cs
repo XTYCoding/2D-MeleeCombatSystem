@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,12 +32,14 @@ public class PlayerState
 
     public virtual void Enter()
     {
-        //Debug.Log("Enter"+animBoolName);
+        Debug.Log("Enter"+animBoolName);
         rigidBody = player.rigidBody;
         animator = player.animator;
         playerInput = player.playerInput;
         physicsCheck = player.physicsCheck;
         animFinTrigger = false;
+
+        player.playerInput.GamePlay.ReleaseSkill.started += ReleaseSkill;
 
 
         inputXY = playerInput.GamePlay.Move.ReadValue<Vector2>();
@@ -45,13 +48,23 @@ public class PlayerState
             animator.SetBool(animBoolName, true);
         }
 
-        // ¼ì²é animTriggerName ÊÇ·ñ´æÔÚ
         if (!string.IsNullOrEmpty(animTriggerName) && HasAnimatorParameter(animator, animTriggerName, AnimatorControllerParameterType.Trigger))
         {
             animator.SetTrigger(animTriggerName);
         }
     }
 
+    private void ReleaseSkill(InputAction.CallbackContext context)
+    {
+        if(PlayerSkillManager.instance.currentSkill != null && PlayerSkillManager.instance.currentSkill.IsSkillAvailable())
+        {
+            player.stateMachine.ChangeState(player.realseSkillState);
+        }
+        else
+        {
+            Debug.Log("Current skill is not available or null");
+        }
+    }
 
     public virtual void Exit()
     {
@@ -59,14 +72,14 @@ public class PlayerState
         {
             animator.SetBool(animBoolName, false);
         }
-       // Debug.Log("Exit" + animBoolName);
+        Debug.Log("Exit" + animBoolName);
+
+                player.playerInput.GamePlay.ReleaseSkill.started -= ReleaseSkill;
     }
     public virtual void LogicUpdate()
     {
         inputXY = playerInput.GamePlay.Move.ReadValue<Vector2>();
         animator.SetBool("FacingRight", player.facingRight);
-        
-
     }
     public virtual void PhysicsUpdate()
     {

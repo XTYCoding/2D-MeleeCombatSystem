@@ -25,7 +25,7 @@ public class EnemyState
 
     public virtual void Enter()
     {
-        Debug.Log("Enter" + animBoolName);
+        //Debug.Log("Enter" + animBoolName);
         rigidBody = enemy.rigidBody;
         animator = enemy.animator;     
         physicsCheck = enemy.physicsCheck;
@@ -41,7 +41,7 @@ public class EnemyState
 
     public virtual void Exit()
     {
-        Debug.Log("Exit" + animBoolName);
+        //Debug.Log("Exit" + animBoolName);
         if (!string.IsNullOrEmpty(animBoolName) && HasAnimatorParameter(animator, animBoolName, AnimatorControllerParameterType.Bool))
         {
             animator.SetBool(animBoolName, false);

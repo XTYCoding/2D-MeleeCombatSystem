@@ -21,7 +21,9 @@ public class PlayerGroundState : PlayerState
         playerInput.GamePlay.HeavyAttack.started += HeavyAttack;
         playerInput.GamePlay.Block.started += Block;
     }
-    
+
+
+
     private void Block(InputAction.CallbackContext context)
     {
         if(physicsCheck.isGrounded) stateMachine.ChangeState(player.blockState);

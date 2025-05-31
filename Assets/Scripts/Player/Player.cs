@@ -31,6 +31,8 @@ public class Player : Entity
     public PlayerHeavyAttackState heavyAttackState { get; private set; }
     public PlayerBlockState blockState { get; private set; }
 
+    public PlayerRealseSkillState realseSkillState { get; private set; }
+
     protected override void Awake()
     {
         // Debug.Log("Awake");
@@ -51,7 +53,9 @@ public class Player : Entity
         lightAttackState = new PlayerLightAttackState(this, stateMachine, "LightAttack", "LightAttackTrigger");
         heavyAttackState = new PlayerHeavyAttackState(this, stateMachine, "HeavyAttack", "HeavyAttackTrigger");
         blockState = new PlayerBlockState(this, stateMachine, "Block", "BlockTrigger");
+        realseSkillState = new PlayerRealseSkillState(this, stateMachine, "RealseSkill", "RealseSkillTrigger");
     }
+
 
 
 

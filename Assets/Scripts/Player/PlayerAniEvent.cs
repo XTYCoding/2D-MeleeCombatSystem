@@ -42,4 +42,9 @@ public class NewBehaviourScript : MonoBehaviour
 
     }
 
+    public void AnimationSkillOver()
+    {
+        PlayerSkillManager.instance.currentSkill.skillFinished = true;
+    }
+
 }
