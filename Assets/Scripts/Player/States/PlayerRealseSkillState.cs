@@ -22,6 +22,7 @@ public class PlayerRealseSkillState : PlayerState
     {
         base.Exit();
         currentSkill.SkillReleaseOver();
+        //currentSkill.enabled = false;
         PlayerSkillManager.instance.canChangeSkill = true;
     }
 

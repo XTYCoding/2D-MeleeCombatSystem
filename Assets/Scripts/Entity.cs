@@ -49,19 +49,21 @@ public class Entity : MonoBehaviour
 
     public void SetVelocity(Vector2 inputXY)
     {
+       // Debug.Log("SetVelocity: " + inputXY.x + ", " + inputXY.y);
         FlipController(inputXY.x); //ÿһ�θı��ٶȶ�����Ƿ�Ҫ��ת
         rigidBody.velocity = new Vector2(moveSpeed * inputXY.x * Time.deltaTime, rigidBody.velocity.y);
     }
 
     public void SetVelocity(float x,float y)
     {
-        FlipController(x); //ÿһ�θı��ٶȶ�����Ƿ�Ҫ��ת
+        //Debug.Log("SetVelocity: " + x + ", " + y);
+        FlipController(x); 
         rigidBody.velocity = new Vector2(x,y);
     }
 
     public void SetZeroVelocity()
     {
-
+       // Debug.Log("SetZeroVelocity");
         rigidBody.velocity = new Vector2(0, 0);
     }
     

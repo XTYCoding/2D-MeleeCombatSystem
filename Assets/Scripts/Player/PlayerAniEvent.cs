@@ -47,4 +47,14 @@ public class NewBehaviourScript : MonoBehaviour
         PlayerSkillManager.instance.currentSkill.skillFinished = true;
     }
 
+    public void AnimationSkillTrigger()
+    {
+        PlayerSkillManager.instance.currentSkill.skillTrigger = true;
+    }
+
+    public void AnimationSkillTriggerFalse()
+    {
+        PlayerSkillManager.instance.currentSkill.skillTrigger = false;
+    }
+
 }

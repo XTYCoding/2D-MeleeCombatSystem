@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill : MonoBehaviour
+public class Skill
 {
     public string skillName;
     public bool skillFinished = false;
-
+    public bool skillTrigger = false;
 
 
     public virtual bool IsSkillAvailable()
@@ -18,6 +18,7 @@ public class Skill : MonoBehaviour
     {
         Debug.Log("Releasing skill: " + skillName);
         skillFinished = false;
+        
     }
 
     public virtual void SkillReleaseOver()

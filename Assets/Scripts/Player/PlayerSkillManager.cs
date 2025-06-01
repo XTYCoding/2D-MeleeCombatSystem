@@ -24,6 +24,9 @@ public class PlayerSkillManager : MonoBehaviour
             Destroy(instance.gameObject);
         else instance = this;
 
+        upSkill = new LightCut();
+        downSkill = new ShiledCast();
+        leftSkill = new HolySlash();
     }
 
     void Start()

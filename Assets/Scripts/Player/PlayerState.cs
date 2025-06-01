@@ -32,7 +32,7 @@ public class PlayerState
 
     public virtual void Enter()
     {
-        Debug.Log("Enter"+animBoolName);
+        //Debug.Log("Enter"+animBoolName);
         rigidBody = player.rigidBody;
         animator = player.animator;
         playerInput = player.playerInput;
@@ -58,6 +58,7 @@ public class PlayerState
     {
         if(PlayerSkillManager.instance.currentSkill != null && PlayerSkillManager.instance.currentSkill.IsSkillAvailable())
         {
+            //PlayerSkillManager.instance.currentSkill.enabled = true;
             player.stateMachine.ChangeState(player.realseSkillState);
         }
         else
@@ -72,9 +73,9 @@ public class PlayerState
         {
             animator.SetBool(animBoolName, false);
         }
-        Debug.Log("Exit" + animBoolName);
+        //Debug.Log("Exit" + animBoolName);
 
-                player.playerInput.GamePlay.ReleaseSkill.started -= ReleaseSkill;
+        player.playerInput.GamePlay.ReleaseSkill.started -= ReleaseSkill;
     }
     public virtual void LogicUpdate()
     {

@@ -11,6 +11,7 @@ public class PlayerJumpState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        Debug.Log(player.jumpForce);
         rigidBody.AddForce(Vector2.up*player.jumpForce, ForceMode2D.Impulse);
     }
 
@@ -27,6 +28,7 @@ public class PlayerJumpState : PlayerState
 
     public override void PhysicsUpdate()
     {
+        //player.SetVelocity(0,player.moveSpeed*Time.deltaTime);
         base.PhysicsUpdate();
     }
 }

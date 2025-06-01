@@ -5,20 +5,21 @@ using UnityEngine;
 public class Enemy : Entity
 {
     public EnemyStateMachine stateMachine;
-    public Transform player{ get; private set; }
+    public Transform player;
 
 
     protected override void Awake()
     {
         base.Awake();
         stateMachine = new EnemyStateMachine();
-        player = PlayerManager.instance.player.transform;
+        //player = PlayerManager.instance.player.transform;
 
     }
     // Start is called before the first frame update
     protected virtual void Start()
     {
         //stateMachine.Initialize();
+       // player = PlayerManager.instance.player.transform;
     }
 
     // Update is called once per frame
