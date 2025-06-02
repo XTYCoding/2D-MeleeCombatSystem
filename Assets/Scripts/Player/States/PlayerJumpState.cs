@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerJumpState : PlayerState
+public class PlayerJumpState : PlayerAirState
 {
     public PlayerJumpState(Player player, PlayerStateMachine stateMachine, string animBoolName, string animTriggerName) : base(player, stateMachine, animBoolName, animTriggerName)
     {
@@ -11,7 +11,6 @@ public class PlayerJumpState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log(player.jumpForce);
         rigidBody.AddForce(Vector2.up*player.jumpForce, ForceMode2D.Impulse);
     }
 

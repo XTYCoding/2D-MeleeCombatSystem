@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFallState : PlayerState
+public class PlayerFallState : PlayerAirState
 {
     public PlayerFallState(Player player, PlayerStateMachine stateMachine, string animBoolName, string animTriggerName) : base(player, stateMachine, animBoolName, animTriggerName)
     {
@@ -16,6 +16,7 @@ public class PlayerFallState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        player.canAirAttack = true; // Enable air attack after falling
     }
 
     public override void LogicUpdate()

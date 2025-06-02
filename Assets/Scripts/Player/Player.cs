@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,7 @@ public class Player : Entity
     public float gameSpeed;
 
     public int comboCounter = 0;
+    public bool canAirAttack = true;
 
     public PlayerIdleState idleState { get; private set; }
     public PlayerWalkState walkState { get; private set; }
@@ -29,6 +31,9 @@ public class Player : Entity
     public PlayerBackDashState backDashState { get; private set; }
     public PlayerLightAttackState lightAttackState { get; private set; }
     public PlayerHeavyAttackState heavyAttackState { get; private set; }
+    public PlayerAirAttackState airAttackState { get; private set; }
+
+    public PlayerDashAttackState dashAttackState { get; private set; }
     public PlayerBlockState blockState { get; private set; }
 
     public PlayerRealseSkillState realseSkillState { get; private set; }
@@ -54,6 +59,8 @@ public class Player : Entity
         heavyAttackState = new PlayerHeavyAttackState(this, stateMachine, "HeavyAttack", "HeavyAttackTrigger");
         blockState = new PlayerBlockState(this, stateMachine, "Block", "BlockTrigger");
         realseSkillState = new PlayerRealseSkillState(this, stateMachine, "RealseSkill", "RealseSkillTrigger");
+        dashAttackState = new PlayerDashAttackState(this, stateMachine, "DashAttack", "DashAttackTrigger");
+        airAttackState = new PlayerAirAttackState(this, stateMachine, "AirAttack", "AirAttackTrigger");
     }
 
 

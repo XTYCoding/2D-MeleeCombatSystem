@@ -81,6 +81,7 @@ public class PlayerState
     {
         inputXY = playerInput.GamePlay.Move.ReadValue<Vector2>();
         animator.SetBool("FacingRight", player.facingRight);
+        animator.SetBool("IsGrounded", physicsCheck.isGrounded);
     }
     public virtual void PhysicsUpdate()
     {
