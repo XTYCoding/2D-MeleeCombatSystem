@@ -75,12 +75,12 @@ public class Entity : MonoBehaviour
         }
         else
         {
-          //  Debug.Log(attack.power+" "+attack.dir);
-            rigidBody.AddForce(new Vector2(attack.power * attack.dir, 0), ForceMode2D.Impulse);
-            CameraFx.Instance.HitPause(5);
-            CameraFx.Instance.CameraShake(0.1f, attack.power*0.02f);
-            animator.SetTrigger("TakeDamage");
+            //  Debug.Log(attack.power+" "+attack.dir);
             fxAnimator.SetTrigger("TakeDamage");
+            rigidBody.AddForce(new Vector2(attack.power * attack.dir, 0), ForceMode2D.Impulse);
+            CameraFx.Instance.HitPause((int)attack.power*3);
+            CameraFx.Instance.CameraShake(0.1f, attack.power*0.05f);
+            
             Debug.Log(this.name+"Take Damage");          
         }
         // Implement damage logic here
@@ -90,7 +90,7 @@ public class Entity : MonoBehaviour
     {
         Debug.Log(this.name + " Stunned");
         Stunned = true;
-        CameraFx.Instance.HitPause(5);
+        CameraFx.Instance.HitPause(15);
         CameraFx.Instance.CameraShake(0.1f, 0.05f);
     }
 }

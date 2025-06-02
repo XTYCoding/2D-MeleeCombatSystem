@@ -43,7 +43,7 @@ public class Player : Entity
         // Debug.Log("Awake");
         base.Awake();
         playerInput = new PlayerInput();
-        Time.timeScale = gameSpeed;
+        //Time.timeScale = gameSpeed;
 
         stateMachine = new PlayerStateMachine();
         idleState = new PlayerIdleState(this, stateMachine, "Idle", "IdleTrigger");

@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraFx : MonoBehaviour
 {
+    public CinemachineVirtualCamera virtualCamera;
+    public CinemachineImpulseSource impulseSource;
+    private Vector3 originalOffset;
     private static CameraFx _instance;
     public static CameraFx Instance
     {
@@ -17,6 +21,26 @@ public class CameraFx : MonoBehaviour
         }
     }
 
+    void Awake()
+    {
+        if (virtualCamera == null)
+            virtualCamera = FindFirstObjectByType<CinemachineVirtualCamera>();
+        if (virtualCamera == null)
+        {
+            Debug.LogError("CameraFx: 没有找到 CinemachineVirtualCamera！");
+            return;
+        }
+
+        var transposer = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+        if (transposer == null)
+        {
+            Debug.LogError("CameraFx: CinemachineVirtualCamera 没有 CinemachineTransposer 组件！");
+            return;
+        }
+    
+
+    }
+
     private bool isShake;
     public void HitPause(int duration)
     {
@@ -25,33 +49,47 @@ public class CameraFx : MonoBehaviour
 
     IEnumerator Pause(int duration)
     {
-        float pauseTime = duration / 60; //duration是帧数，计算暂停时间
+        float pauseTime = (float)duration / 60; //duration是帧数，计算暂停时间
         Time.timeScale = 0;              //游戏暂停
-        yield return new WaitForSeconds(pauseTime); //等一段时间后恢复正常游戏速度
+        yield return new WaitForSecondsRealtime(pauseTime); //等一段时间后恢复正常游戏速度
         Time.timeScale = 1;
     }
 
     public void CameraShake(float duration,float power)
     {
-        if (!isShake) //避免频繁震动
-        {
-            StartCoroutine(Shake(duration,power));
-        }
+        if (impulseSource != null)
+            impulseSource.GenerateImpulse(power);
+        // if (!isShake) //避免频繁震动
+        // {
+        //     StartCoroutine(Shake(duration, power));
+        // }
     }
 
-    IEnumerator Shake(float duration,float power )
+    IEnumerator Shake(float duration, float power)
     {
         isShake = true;
-        Transform camera = Camera.main.transform;
-        Vector3 startPosition = camera.position;
-
-        while (duration>0)
+        var transposer = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+        Vector3 originalPos = transposer.m_TrackedObjectOffset;
+        float timer = 0f;
+        while (timer < duration)
         {
-            camera.position = Random.insideUnitSphere*power + startPosition;
-            duration -= Time.timeScale;
+            transposer.m_TrackedObjectOffset = originalPos + (Vector3)Random.insideUnitCircle * power;
+            timer += Time.unscaledDeltaTime;
             yield return null;
         }
-        camera.position = startPosition; //震动完镜头恢复原始位置
+        transposer.m_TrackedObjectOffset = originalPos;
         isShake = false;
+        // isShake = true;
+        // Transform camera = Camera.main.transform;
+        // Vector3 startPosition = camera.position;
+
+        // while (duration>0)
+        // {
+        //     camera.position = Random.insideUnitSphere*power + startPosition;
+        //     duration -= Time.timeScale;
+        //     yield return null;
+        // }
+        // camera.position = startPosition; //震动完镜头恢复原始位置
+        // isShake = false;
     }
 }

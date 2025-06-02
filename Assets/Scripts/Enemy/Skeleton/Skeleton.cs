@@ -44,11 +44,7 @@ public class Skeleton : Enemy
     public override void TakeDamage(Attack attack)
     {
         
-        CameraFx.Instance.HitPause(5);
-        CameraFx.Instance.CameraShake(0.1f, attack.power*0.02f);
-        SetZeroVelocity();
-        rigidBody.AddForce(new Vector2(attack.power * attack.dir, 0), ForceMode2D.Impulse);
-        fxAnimator.SetTrigger("TakeDamage");
+        base.TakeDamage(attack);
         stateMachine.ChangeState(hurtState);
     }
 
