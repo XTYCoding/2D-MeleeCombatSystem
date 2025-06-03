@@ -14,4 +14,9 @@ public class HolySlash : Skill
         base.ReleaseSkill();
         PlayerManager.instance.player.animator.SetTrigger("HolySlash");
     }
+
+    public override void FixedUpdate()
+    {
+        PlayerManager.instance.player.SetZeroVelocity();
+    }
 }

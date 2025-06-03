@@ -16,16 +16,17 @@ public class PlayerFallState : PlayerAirState
     public override void Exit()
     {
         base.Exit();
-        player.canAirAttack = true; // Enable air attack after falling
+        player.canAirAttack = true; // 离开Fall状态时允许空中攻击
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        //落地切换状态
         if (physicsCheck.isGrounded)
         {
-            if(inputXY.x>0.1) stateMachine.ChangeState(player.runState);
-            else stateMachine.ChangeState(player.idleState);
+            if (inputXY.x > 0.1) stateMachine.ChangeState(player.runState); //落地时x轴有输入就进入Run状态
+            else stateMachine.ChangeState(player.idleState); //没有输入就进入Idle状态
         }
     }
 

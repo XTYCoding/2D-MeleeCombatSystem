@@ -22,7 +22,8 @@ public class PlayerTurnState : PlayerGroundState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(animFinTrigger) stateMachine.ChangeState(player.runState);
+        //如果动画结束就切换到Run状态
+        if (animFinTrigger) stateMachine.ChangeState(player.runState);
     }
 
     public override void PhysicsUpdate()

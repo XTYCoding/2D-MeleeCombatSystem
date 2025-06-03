@@ -11,12 +11,12 @@ public class PlayerAirAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        player.canAirAttack = false; // Disable air attack until the animation finishes
+        player.canAirAttack = false; // 释放空中攻击后不能再攻击
     }
     public override void Exit()
     {
         base.Exit();
-        player.SetZeroVelocity(); // Reset velocity after air attack
+        player.SetZeroVelocity(); // 攻击结束重置速度
     }
     public override void LogicUpdate()
     {
@@ -25,6 +25,6 @@ public class PlayerAirAttackState : PlayerState
     }
     public override void PhysicsUpdate()
     {
-        player.SetZeroVelocity(); // Reset velocity after air attack
+        player.SetZeroVelocity(); // 攻击时保持速度为零
     }
 }

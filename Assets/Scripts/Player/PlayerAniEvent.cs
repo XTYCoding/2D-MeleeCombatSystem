@@ -27,7 +27,6 @@ public class NewBehaviourScript : MonoBehaviour
     public void AnimationAttackOver()
     {
         player.isAttacking = false;
-
     }
 
     public void AnimationBlock()

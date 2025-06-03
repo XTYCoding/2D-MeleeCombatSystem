@@ -21,9 +21,10 @@ public class PlayerWalkState : PlayerGroundState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (Mathf.Abs(inputXY.x) < 0.1)
+ 
+        if (Mathf.Abs(inputXY.x) < 0.1)        // 如果输入的X轴小于0.1，则切换到Idle状态
             stateMachine.ChangeState(player.idleState);
-        else if (Mathf.Abs(inputXY.x) > 0.7)
+        else if (Mathf.Abs(inputXY.x) > 0.7)   // 如果输入的X轴大于0.7，则切换到Run状态
             stateMachine.ChangeState(player.runState);
     }
 

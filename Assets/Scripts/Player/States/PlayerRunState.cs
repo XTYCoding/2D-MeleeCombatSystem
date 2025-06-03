@@ -21,6 +21,7 @@ public class PlayerRunState : PlayerGroundState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        // 如果输入的X轴小于0.1，则切换到RunBreak状态
         if (Mathf.Abs(inputXY.x) < 0.1) stateMachine.ChangeState(player.runBreakState);
     }
 

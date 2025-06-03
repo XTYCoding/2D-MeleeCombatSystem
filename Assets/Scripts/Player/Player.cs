@@ -1,50 +1,62 @@
 using System.Collections;
+// 引用集合类
 using System.Collections.Generic;
+// JetBrains 注解（可选）
 using JetBrains.Annotations;
+// Unity 引擎核心命名空间
 using UnityEngine;
+// 新输入系统命名空间
 using UnityEngine.InputSystem;
 
+// Player类，继承自Entity，表示玩家角色
 public class Player : Entity
 {
-
+    // 玩家输入组件
+    public PlayerInput playerInput;
+    // 玩家状态机
     public PlayerStateMachine stateMachine { get; private set;}
 
-    public Vector2 inputXY;
+    // 跳跃力度
     public int jumpForce;
+    // 冲刺速度
     public int dashSpeed;
 
+    // 游戏速度（可用于调节Time.timeScale）
     public float gameSpeed;
 
+    // 连击计数器
     public int comboCounter = 0;
+    // 是否可以空中攻击
     public bool canAirAttack = true;
 
+    #region 各种状态对象，私有set防止外部修改  
     public PlayerIdleState idleState { get; private set; }
     public PlayerWalkState walkState { get; private set; }
     public PlayerRunState runState { get; private set; }
-
     public PlayerRunBreakState runBreakState { get;private set; }
     public PlayerTurnState turnState { get; private set; }
     public PlayerJumpState jumpState {  get; private set; }
     public PlayerFallState fallState { get; private set; }
-
     public PlayerDashState dashState { get; private set; }
     public PlayerBackDashState backDashState { get; private set; }
     public PlayerLightAttackState lightAttackState { get; private set; }
     public PlayerHeavyAttackState heavyAttackState { get; private set; }
     public PlayerAirAttackState airAttackState { get; private set; }
-
     public PlayerDashAttackState dashAttackState { get; private set; }
     public PlayerBlockState blockState { get; private set; }
-
     public PlayerRealseSkillState realseSkillState { get; private set; }
+    
+    public PlayerHurtState hurtState { get; private set; }
+    #endregion
 
+    // 初始化各状态和输入系统
     protected override void Awake()
     {
-        // Debug.Log("Awake");
         base.Awake();
         playerInput = new PlayerInput();
         //Time.timeScale = gameSpeed;
 
+        #region 初始化状态机和状态
         stateMachine = new PlayerStateMachine();
         idleState = new PlayerIdleState(this, stateMachine, "Idle", "IdleTrigger");
         walkState = new PlayerWalkState(this, stateMachine, "Walk", "WalkTrigger");
@@ -61,39 +73,55 @@ public class Player : Entity
         realseSkillState = new PlayerRealseSkillState(this, stateMachine, "RealseSkill", "RealseSkillTrigger");
         dashAttackState = new PlayerDashAttackState(this, stateMachine, "DashAttack", "DashAttackTrigger");
         airAttackState = new PlayerAirAttackState(this, stateMachine, "AirAttack", "AirAttackTrigger");
+        hurtState = new PlayerHurtState(this, stateMachine, "Hurt", "HurtTrigger");
+        #endregion
     }
 
-
-
-
-
-
-
-
+    // MonoBehaviour生命周期：Start，在Awake后调用
     void Start()
     {
-        //Debug.Log("Start");
+        //状态机初始默认状态是Idle
         stateMachine.Initialize(idleState);
+    }
+
+    public override void TakeDamage(Attack attack)
+    {
+        if (isBlocking)
+        {
+            Debug.Log(this.name + " is Blocking");
+        }
+        else
+        {
+            // 受击时暂停和震动效果
+            CameraFx.Instance.HitPause((int)attack.power * 3);
+            CameraFx.Instance.CameraShake(0.1f, attack.power * 0.05f);
+            rigidBody.AddForce(new Vector2(attack.power * attack.dir, 0), ForceMode2D.Impulse);
+            stateMachine.ChangeState(hurtState);
+            Debug.Log(this.name + "Take Damage");
+        }
+
         
     }
 
-    // Update is called once per frame
+    // MonoBehaviour生命周期：Update，每帧调用一次
     private void Update()
     {
         stateMachine.currentState.LogicUpdate();
-        
     }
 
+    // MonoBehaviour生命周期：FixedUpdate，每物理帧调用一次
     private void FixedUpdate()
     {
         stateMachine.currentState.PhysicsUpdate();
     }
 
+    // 启用时启用输入系统
     private void OnEnable()
     {
         playerInput.Enable();
     }
 
+    // 禁用时禁用输入系统
     private void OnDisable()
     {
         playerInput.Disable();

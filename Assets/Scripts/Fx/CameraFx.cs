@@ -5,10 +5,13 @@ using Cinemachine;
 
 public class CameraFx : MonoBehaviour
 {
+    private static CameraFx _instance;
+
     public CinemachineVirtualCamera virtualCamera;
     public CinemachineImpulseSource impulseSource;
     private Vector3 originalOffset;
-    private static CameraFx _instance;
+
+    private bool isShake;
     public static CameraFx Instance
     {
         get
@@ -41,7 +44,6 @@ public class CameraFx : MonoBehaviour
 
     }
 
-    private bool isShake;
     public void HitPause(int duration)
     {
         StartCoroutine(Pause(duration));
@@ -57,12 +59,19 @@ public class CameraFx : MonoBehaviour
 
     public void CameraShake(float duration,float power)
     {
+        if (isShake) return;
         if (impulseSource != null)
+        {
+            isShake = true;
             impulseSource.GenerateImpulse(power);
-        // if (!isShake) //避免频繁震动
-        // {
-        //     StartCoroutine(Shake(duration, power));
-        // }
+            StartCoroutine(ShakeCooldown(duration));
+        }
+    }
+
+    private IEnumerator ShakeCooldown(float duration)
+    {
+        yield return new WaitForSecondsRealtime(duration);
+        isShake = false;
     }
 
     IEnumerator Shake(float duration, float power)

@@ -11,6 +11,7 @@ public class PlayerJumpState : PlayerAirState
     public override void Enter()
     {
         base.Enter();
+        //施加向上的跳跃力
         rigidBody.AddForce(Vector2.up*player.jumpForce, ForceMode2D.Impulse);
     }
 
@@ -22,6 +23,7 @@ public class PlayerJumpState : PlayerAirState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        //如果y轴速度小于0，则切换到Fall状态
         if (rigidBody.velocity.y < 0) stateMachine.ChangeState(player.fallState);
     }
 

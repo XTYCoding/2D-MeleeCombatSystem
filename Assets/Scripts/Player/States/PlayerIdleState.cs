@@ -21,6 +21,7 @@ public class PlayerIdleState : PlayerGroundState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        //如果输入的X轴大于0.1，则切换到行走状态
         if (Mathf.Abs(inputXY.x) > 0.1) stateMachine.ChangeState(player.walkState);
     }
 
