@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    public float damage;
+    public int damage;
     public float power;
     public int dir;
 

@@ -10,6 +10,7 @@ public class Skeleton : Enemy
     public SkeletonAttackState attackState;
     public SkeletonStunnedState stunnedState;
     public SkeletonHurtState hurtState;
+    public SkeletonDeadState deadState;
 
     public float hurtStateDuration = 1f; // Duration of the hurt state in seconds
 
@@ -23,6 +24,7 @@ public class Skeleton : Enemy
         attackState = new SkeletonAttackState(stateMachine, this, "Attack", "AttackTrigger", this);
         stunnedState = new SkeletonStunnedState(stateMachine, this, "Stunned", "StunnedTrigger", this);
         hurtState = new SkeletonHurtState(stateMachine, this, "Hurt", "HurtTrigger", this);
+        deadState = new SkeletonDeadState(stateMachine, this, "Dead", "DeadTrigger", this);
     }
 
     protected override void FixedUpdate()

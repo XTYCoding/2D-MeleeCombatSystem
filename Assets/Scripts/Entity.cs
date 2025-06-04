@@ -10,6 +10,7 @@ public class Entity : MonoBehaviour
     public PhysicsCheck physicsCheck; // 地面检测等物理检测组件
     public Animator animator; // 主动画控制器
     public Animator fxAnimator; // 特效动画控制器
+    public EntityStat stat; // 角色状态组件（如生命值等）
     #endregion
 
     #region 状态变量 
@@ -29,6 +30,7 @@ public class Entity : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>(); // 获取刚体组件
         physicsCheck = GetComponent<PhysicsCheck>(); // 获取物理检测组件
+        stat = GetComponent<EntityStat>(); // 获取角色状态组件
         Animator[] animators = GetComponentsInChildren<Animator>(); // 获取所有子物体上的Animator
         animator = animators[0]; // 主动画
         fxAnimator = animators[1]; // 特效动画
@@ -82,13 +84,23 @@ public class Entity : MonoBehaviour
         }
         else
         {
-            // 受击时暂停和震动效果
-            CameraFx.Instance.HitPause((int)attack.power * 3);
-            CameraFx.Instance.CameraShake(0.1f, attack.power * 0.05f);
-            rigidBody.AddForce(new Vector2(attack.power * attack.dir, 0), ForceMode2D.Impulse);
+            TakeDamageStat(attack);
+            TakeDamageEffect(attack);
             Debug.Log(this.name + "Take Damage");
         }
         // Implement damage logic here
+    }
+
+    public virtual void TakeDamageStat(Attack attack)
+    {
+        stat.DoDamage(attack.damage);
+    }
+
+    public virtual void TakeDamageEffect(Attack attack)
+    {
+        CameraFx.Instance.HitPause((int)attack.power * 3);
+        CameraFx.Instance.CameraShake(0.1f, attack.power * 0.05f);
+        rigidBody.AddForce(new Vector2(attack.power * attack.dir, 0), ForceMode2D.Impulse);
     }
 
     public void SetStunned()
