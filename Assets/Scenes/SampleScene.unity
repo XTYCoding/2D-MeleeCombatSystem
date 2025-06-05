@@ -632,6 +632,8 @@ MonoBehaviour:
   damage: 0
   power: 1
   dir: 0
+  attackType: 0
+  attacker: {fileID: 0}
 --- !u!61 &268417803
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -678,6 +680,50 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &384480333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 384480335}
+  - component: {fileID: 384480334}
+  m_Layer: 0
+  m_Name: AttackManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &384480334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384480333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc853bff211718f4e8e07e0aac1cfc76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &384480335
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384480333}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &485513679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1164,6 +1210,7 @@ MonoBehaviour:
   physicsCheck: {fileID: 0}
   animator: {fileID: 0}
   fxAnimator: {fileID: 0}
+  stat: {fileID: 0}
   isAttacking: 0
   isBlocking: 0
   Stunned: 0
@@ -3447,6 +3494,7 @@ GameObject:
   - component: {fileID: 1128357291}
   - component: {fileID: 1128357290}
   - component: {fileID: 1128357289}
+  - component: {fileID: 1128357294}
   m_Layer: 8
   m_Name: Skeleton
   m_TagString: Untagged
@@ -3501,6 +3549,7 @@ MonoBehaviour:
   physicsCheck: {fileID: 0}
   animator: {fileID: 0}
   fxAnimator: {fileID: 0}
+  stat: {fileID: 0}
   isAttacking: 0
   isBlocking: 0
   Stunned: 0
@@ -3593,6 +3642,22 @@ Transform:
   - {fileID: 1598862063}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1128357294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128357288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0efe55ceab9745e4eabd9a135a62bcdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHP:
+    baseValue: 0
+  maxHP:
+    baseValue: 10
 --- !u!1 &1336123055
 GameObject:
   m_ObjectHideFlags: 0
@@ -4210,6 +4275,7 @@ MonoBehaviour:
   physicsCheck: {fileID: 0}
   animator: {fileID: 0}
   fxAnimator: {fileID: 0}
+  stat: {fileID: 0}
   isAttacking: 0
   isBlocking: 0
   Stunned: 0
@@ -4263,7 +4329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1969859712}
   - component: {fileID: 1969859714}
-  - component: {fileID: 1969859713}
+  - component: {fileID: 1969859715}
   m_Layer: 9
   m_Name: AttackArea
   m_TagString: Untagged
@@ -4286,21 +4352,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2028166410}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1969859713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969859711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 281e2729b35cc2544b8d99d9d3aba809, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  power: 1
-  dir: 0
 --- !u!61 &1969859714
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4347,6 +4398,23 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.30599785, y: 0.14922738}
   m_EdgeRadius: 0
+--- !u!114 &1969859715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969859711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0204921b89ff9242b1c3d99a1a9816a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 2
+  power: 1
+  dir: 0
+  attackType: 2
+  attacker: {fileID: 0}
 --- !u!1 &2028166409
 GameObject:
   m_ObjectHideFlags: 0
@@ -4961,6 +5029,8 @@ MonoBehaviour:
   damage: 0
   power: 1
   dir: 0
+  attackType: 0
+  attacker: {fileID: 0}
 --- !u!61 &2060590259
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5022,3 +5092,4 @@ SceneRoots:
   - {fileID: 108757164}
   - {fileID: 634351374}
   - {fileID: 1695813098}
+  - {fileID: 384480335}

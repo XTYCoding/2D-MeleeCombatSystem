@@ -7,16 +7,17 @@ public class Attack : MonoBehaviour
     public int damage;
     public float power;
     public int dir;
+    public AttackType attackType;
 
-    private Entity attacker;
+    public Entity attacker;
 
-    void Awake()
+    public virtual void Awake()
     {
         attacker = GetComponentInParent<Entity>();
         
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         Entity rival = collision.GetComponent<Entity>();
         dir = attacker.facingDir;

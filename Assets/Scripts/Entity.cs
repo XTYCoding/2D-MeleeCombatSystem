@@ -25,7 +25,8 @@ public class Entity : MonoBehaviour
 
     public int moveSpeed; // 移动速度
 
-
+    public System.Action onFlipped;
+    public System.Action takeDamage;
     protected virtual void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>(); // 获取刚体组件
@@ -53,6 +54,9 @@ public class Entity : MonoBehaviour
         facingDir *= -1;
         facingRight = !facingRight;
         transform.Rotate(0, 180, 0);
+
+        if(onFlipped != null)
+            onFlipped(); // 调用翻转事件
     }
 
     public void SetVelocity(Vector2 inputXY)
@@ -86,6 +90,7 @@ public class Entity : MonoBehaviour
         {
             TakeDamageStat(attack);
             TakeDamageEffect(attack);
+            takeDamage();
             Debug.Log(this.name + "Take Damage");
         }
         // Implement damage logic here
@@ -100,7 +105,21 @@ public class Entity : MonoBehaviour
     {
         CameraFx.Instance.HitPause((int)attack.power * 3);
         CameraFx.Instance.CameraShake(0.1f, attack.power * 0.05f);
-        rigidBody.AddForce(new Vector2(attack.power * attack.dir, 0), ForceMode2D.Impulse);
+        fxAnimator.SetTrigger("HurtTrigger"); // 播放受击特效动画
+        switch (attack.attackType)
+        {
+            case AttackType.Normal:
+                AttackEffectManager.Instance.DoNormal(this, attack);
+                break;
+            case AttackType.Knockback:
+                AttackEffectManager.Instance.DoKnockback(this, attack);
+                break;
+            case AttackType.Launch:
+                AttackEffectManager.Instance.DoLaunch(this, attack);
+                break;
+                // ...更多类型
+        }
+        
     }
 
     public void SetStunned()

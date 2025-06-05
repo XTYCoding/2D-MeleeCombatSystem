@@ -18,7 +18,7 @@ public class SkeletonStat : EnemyStat
         base.Dead(); // 调用基类的死亡逻辑
         Debug.Log("Skeleton is dead");
         // 可以添加死亡动画或其他逻辑
-        skeleton.stateMachine.ChangeState(skeleton.deadState);
+        //skeleton.stateMachine.ChangeState(skeleton.deadState);
 
     }
 }
