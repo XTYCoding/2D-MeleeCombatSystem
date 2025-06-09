@@ -10,9 +10,4 @@ public class EnemyStat : EntityStat
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

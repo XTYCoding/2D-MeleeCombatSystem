@@ -5,14 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class Stat
 {
-    [SerializeField] private int baseValue;
+    [SerializeField] private float baseValue;
 
-    public int GetValue()
+    public float GetValue()
     {
         return baseValue;
     }
     
-    public void SetValue(int value)
+    public void SetValue(float value)
     {
         baseValue = value;
     }

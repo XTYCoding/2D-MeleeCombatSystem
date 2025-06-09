@@ -14,6 +14,12 @@ public class PlayerAirState : PlayerState
     {
         base.Enter();
         playerInput.GamePlay.LightAttack.started += LightAttack;
+        playerInput.GamePlay.HeavyAttack.started += HeavyAttack;
+    }
+
+    private void HeavyAttack(InputAction.CallbackContext context)
+    {
+        stateMachine.ChangeState(player.fallAttackState);
     }
 
     private void LightAttack(InputAction.CallbackContext context)
@@ -26,5 +32,6 @@ public class PlayerAirState : PlayerState
     {
         base.Exit();
         playerInput.GamePlay.LightAttack.started -= LightAttack;
+        playerInput.GamePlay.HeavyAttack.started -= HeavyAttack;
     }
 }

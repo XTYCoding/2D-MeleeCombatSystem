@@ -42,6 +42,7 @@ public class Player : Entity
     public PlayerLightAttackState lightAttackState { get; private set; }
     public PlayerHeavyAttackState heavyAttackState { get; private set; }
     public PlayerAirAttackState airAttackState { get; private set; }
+    public PlayerFallAttackState fallAttackState{ get; private set; }
     public PlayerDashAttackState dashAttackState { get; private set; }
     public PlayerBlockState blockState { get; private set; }
     public PlayerRealseSkillState realseSkillState { get; private set; }
@@ -73,7 +74,9 @@ public class Player : Entity
         realseSkillState = new PlayerRealseSkillState(this, stateMachine, "RealseSkill", "RealseSkillTrigger");
         dashAttackState = new PlayerDashAttackState(this, stateMachine, "DashAttack", "DashAttackTrigger");
         airAttackState = new PlayerAirAttackState(this, stateMachine, "AirAttack", "AirAttackTrigger");
+        fallAttackState = new PlayerFallAttackState(this, stateMachine, "FallAttack", "FallAttackTrigger");
         hurtState = new PlayerHurtState(this, stateMachine, "Hurt", "HurtTrigger");
+       
         #endregion
     }
 

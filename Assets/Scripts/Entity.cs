@@ -55,14 +55,14 @@ public class Entity : MonoBehaviour
         facingRight = !facingRight;
         transform.Rotate(0, 180, 0);
 
-        if(onFlipped != null)
+        if (onFlipped != null)
             onFlipped(); // 调用翻转事件
     }
 
     public void SetVelocity(Vector2 inputXY)
     {
         // 设置角色速度（带方向判断和翻转）
-        FlipController(inputXY.x); 
+        FlipController(inputXY.x);
         rigidBody.velocity = new Vector2(moveSpeed * inputXY.x * Time.deltaTime, rigidBody.velocity.y);
     }
 
@@ -88,24 +88,24 @@ public class Entity : MonoBehaviour
         }
         else
         {
-            TakeDamageStat(attack);
+           // TakeDamageStat(attack);
             TakeDamageEffect(attack);
             takeDamage();
-            Debug.Log(this.name + "Take Damage");
+            //Debug.Log(this.name + "Take Damage");
         }
         // Implement damage logic here
     }
 
     public virtual void TakeDamageStat(Attack attack)
     {
-        stat.DoDamage(attack.damage);
+
+        stat.DoPhysicsDamage(attack.physicsDamage);
+        stat.DoMagicDamage(attack.magicDamage,attack.ailmentType);
     }
 
     public virtual void TakeDamageEffect(Attack attack)
     {
-        CameraFx.Instance.HitPause((int)attack.power * 3);
-        CameraFx.Instance.CameraShake(0.1f, attack.power * 0.05f);
-        fxAnimator.SetTrigger("HurtTrigger"); // 播放受击特效动画
+
         switch (attack.attackType)
         {
             case AttackType.Normal:
@@ -116,10 +116,17 @@ public class Entity : MonoBehaviour
                 break;
             case AttackType.Launch:
                 AttackEffectManager.Instance.DoLaunch(this, attack);
+
+                break;
+            case AttackType.Freeze:
+                AttackEffectManager.Instance.DoFreeze(this, attack);
+                break;
+            case AttackType.Delay:
+                AttackEffectManager.Instance.DoDelay(this, attack);
                 break;
                 // ...更多类型
         }
-        
+
     }
 
     public void SetStunned()
@@ -129,5 +136,35 @@ public class Entity : MonoBehaviour
         Stunned = true;
         CameraFx.Instance.HitPause(15);
         CameraFx.Instance.CameraShake(0.1f, 0.05f);
+    }
+    
+    public void Freeze(float duration)
+    {
+        StartCoroutine(FreezeCoroutine(duration));
+    }
+
+    private IEnumerator FreezeCoroutine(float duration)
+    {
+        // 暂存原始速度和动画状态
+        Vector2 originalVelocity = rigidBody.velocity;
+        bool originalAnimatorEnabled = animator.enabled;
+        bool originalFxAnimatorEnabled = fxAnimator.enabled;
+
+        // 停止物理运动
+        rigidBody.velocity = Vector2.zero;
+        rigidBody.isKinematic = true;
+
+        // 暂停动画
+        if (animator != null) animator.enabled = false;
+        if (fxAnimator != null) fxAnimator.enabled = false;
+
+        // 等待指定时间（真实时间，不受 TimeScale 影响）
+        yield return new WaitForSecondsRealtime(duration);
+
+        // 恢复物理和动画
+        rigidBody.isKinematic = false;
+        rigidBody.velocity = originalVelocity;
+        if (animator != null) animator.enabled = originalAnimatorEnabled;
+        if (fxAnimator != null) fxAnimator.enabled = originalFxAnimatorEnabled;
     }
 }

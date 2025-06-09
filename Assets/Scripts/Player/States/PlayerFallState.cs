@@ -16,7 +16,7 @@ public class PlayerFallState : PlayerAirState
     public override void Exit()
     {
         base.Exit();
-        player.canAirAttack = true; // 离开Fall状态时允许空中攻击
+        
     }
 
     public override void LogicUpdate()

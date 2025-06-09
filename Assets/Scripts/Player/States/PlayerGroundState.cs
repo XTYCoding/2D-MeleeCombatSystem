@@ -23,6 +23,8 @@ public class PlayerGroundState : PlayerState
         playerInput.GamePlay.LightAttack.started += LightAttack; // 轻攻击输入
         playerInput.GamePlay.HeavyAttack.started += HeavyAttack; // 重攻击输入
         playerInput.GamePlay.Block.started += Block;         // 格挡输入
+
+        player.canAirAttack = true; // 进入Ground状态时允许空中攻击
     }
 
     // 格挡输入回调

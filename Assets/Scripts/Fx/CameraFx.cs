@@ -56,19 +56,28 @@ public class CameraFx : MonoBehaviour
         yield return new WaitForSecondsRealtime(pauseTime); //等一段时间后恢复正常游戏速度
         Time.timeScale = 1;
     }
+    
+    public void IntenseCameraShake(float duration,float power)
+    {
+        if (impulseSource != null)
+        {
+            impulseSource.GenerateImpulse(power);
+            StartCoroutine(FxCooldown(duration));
+        }
+    }
 
-    public void CameraShake(float duration,float power)
+    public void CameraShake(float duration, float power)
     {
         if (isShake) return;
         if (impulseSource != null)
         {
             isShake = true;
             impulseSource.GenerateImpulse(power);
-            StartCoroutine(ShakeCooldown(duration));
+            StartCoroutine(FxCooldown(duration));
         }
     }
 
-    private IEnumerator ShakeCooldown(float duration)
+    public IEnumerator FxCooldown(float duration)
     {
         yield return new WaitForSecondsRealtime(duration);
         isShake = false;
