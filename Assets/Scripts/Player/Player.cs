@@ -89,19 +89,7 @@ public class Player : Entity
 
     public override void TakeDamage(Attack attack)
     {
-        if (isBlocking)
-        {
-            Debug.Log(this.name + " is Blocking");
-        }
-        else
-        {
-            // 受击时暂停和震动效果
-            CameraFx.Instance.HitPause((int)attack.power * 3);
-            CameraFx.Instance.CameraShake(0.1f, attack.power * 0.05f);
-            rigidBody.AddForce(new Vector2(attack.power * attack.dir, 0), ForceMode2D.Impulse);
-            stateMachine.ChangeState(hurtState);
-            Debug.Log(this.name + "Take Damage");
-        }
+        base.TakeDamage(attack);
 
         
     }
